@@ -1,0 +1,12 @@
+{
+  "name": "planning-poker",
+  "version": "0.0.1",
+  "description": "planning poker",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.4"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

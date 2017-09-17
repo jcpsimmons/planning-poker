@@ -1,0 +1,251 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Socket.IO planning poker</title>
+    <meta name="viewport" content="width=device-width">
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+
+      body {
+        padding: 1em;
+        font: 13px Helvetica, Arial;
+        color: #333;
+        background: #efefef;
+      }
+
+      #topic {
+        border: 5px solid #ddd;
+        padding: 0.5em;
+        width: 100%;
+        margin-bottom: 1em;
+        font-size: 1.5em;
+      }
+
+      #messages {
+        list-style-type: none;
+        margin: 0; padding: 0;
+        overflow-y: scroll;
+        height: 200px;
+        color: white;
+        background: #333;
+      }
+      #messages li { padding: 5px 10px; }
+      #messages li:nth-child(odd) {
+
+      }
+      #messages { margin-bottom: 40px }
+
+      .card {
+        display: inline-block;
+        width: 70px;
+        height: 80px;
+        line-height: 60px;
+        padding: 10px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+        text-align: center;
+        font-size: 3em;
+        cursor: pointer;
+        position: relative;
+        background: white;
+        box-shadow: 2px 1px 5px #d4d4d4;
+        border-radius: 3px;
+      }
+
+      .card input {
+      	position: absolute;
+      	z-index: -1;
+      	opacity: 0;
+      }
+
+      .card__indicator {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 5px solid #ccc;
+        border-radius: 3px;
+      }
+
+      /* Hover and focus states */
+      .card:hover input ~ .card__indicator,
+      .card input:focus ~ .card__indicator {
+      	border-color: #444;
+      }
+
+      /* Checked state */
+      .card input:checked ~ .card__indicator {
+      	border-color: #2aa1c0;
+      }
+
+      /* Hover state whilst checked */
+      .card:hover input:not([disabled]):checked ~ .card__indicator,
+      .card input:checked:focus ~ .card__indicator {
+      	border-color: #0e647d;
+      }
+
+      /* Disabled state */
+      .card input:disabled ~ .card__indicator {
+      	pointer-events: none;
+      	opacity: .6;
+      	background: #e6e6e6;
+      }
+
+      #votes {
+        margin: 1em 0;
+        min-height: 70px;
+      }
+
+      #votes li {
+        display: inline-block;
+        background: #ccc;
+        padding: 5px;
+        margin-right: 5px;
+        margin-bottom: 5px;
+      }
+
+      #votes li span {
+        display: inline-block;
+        height: 30px;
+        line-height: 30px;
+      }
+
+      #votes li .vote {
+        display: inline-block;
+        background: #999;
+        color: white;
+        width: 30px;
+        text-align: center;
+        margin-left: 10px;
+      }
+
+    /*
+
+      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
+      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
+      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }*/
+
+    </style>
+  </head>
+  <body>
+    <form action="">
+
+      <textarea id="topic" placeholder="Task/UserStory" rows="5"></textarea>
+
+      <div class="cards">
+        <label class="card card--radio"> X
+      		<input type="radio" name="points" value="0" class="reset">
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">1
+      		<input type="radio" name="points" value="1" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">2
+      		<input type="radio" name="points" value="2" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">3
+      		<input type="radio" name="points" value="3" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">5
+      		<input type="radio" name="points" value="5" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">8
+      		<input type="radio" name="points" value="8" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">13
+      		<input type="radio" name="points" value="13" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">21
+      		<input type="radio" name="points" value="21" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">34
+      		<input type="radio" name="points" value="34" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">55
+      		<input type="radio" name="points" value="55" >
+          <div class="card__indicator"></div>
+      	</label>
+        <label class="card card--radio">89
+      		<input type="radio" name="points" value="89" >
+          <div class="card__indicator"></div>
+      	</label>
+      </div>
+    </form>
+
+    <ul id="votes">
+      <li><span class="name">Anonymous</span><span class="vote">0</li>
+    </ul>
+
+    <ul id="messages"></ul>
+
+    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+
+        // Socket:
+
+        var socket = io();
+
+        socket.on('connect', function() {
+          socket.emit('set nickname', prompt('What is your nickname?'));
+        });
+
+        socket.on('message', function(msg){
+          $('#messages').prepend($('<li>').html(msg));
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+
+        socket.on('topic update', function (topic) {
+          console.log('topic update event!' + topic);
+          $('#topic').val(topic);
+          voteReset();
+        });
+
+        socket.on('vote update', function (votes) {
+          console.log('topic update event!');
+          console.log(votes);
+
+          $('#votes').html('');
+          votes.forEach(function(element) {
+            $('#votes').prepend($('<li>').html('<span class="name">'  + element.nickname + '</span>' + '<span class="vote">'  + element.vote + '</span>' ));
+          });
+
+        });
+
+        // UI:
+
+        $( "#topic" ).keyup(function() {
+          socket.emit('topic update', $(this).val());
+        });
+
+        $('input[name=points]').change(function () {
+          socket.emit('vote update', $(this).val());
+        });
+
+        /*
+        $('input[name=points].reset').on('click mousedown', function() {
+          $this = $(this);
+          $this.removeAttr("checked");
+          $('input[name=points]').change();
+        });
+        */
+
+        function voteReset() {
+          $('input[name=points]:checked').removeAttr("checked");
+        }
+
+
+      });
+    </script>
+  </body>
+</html>
