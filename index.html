@@ -260,7 +260,6 @@
 
         socket.on('message', function(msg){
           $('#messages').prepend($('<li>').html(msg));
-          window.scrollTo(0, document.body.scrollHeight);
         });
 
         socket.on('topic update', function (topic) {
