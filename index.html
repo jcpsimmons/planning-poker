@@ -2,23 +2,44 @@
 <html>
   <head>
     <title>Socket.IO planning poker</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <meta name="viewport" content="width=device-width">
     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
 
       body {
         padding: 1em;
-        font: 13px Helvetica, Arial;
+        font-family: 'Open Sans', sans-serif;
         color: #333;
-        background: #efefef;
+        background: #306428;
+        background-image: url('images/perlinfelt.jpg')
+      }
+
+      form {
+        text-align: center;
+
       }
 
       #topic {
         border: 5px solid #ddd;
         padding: 0.5em;
         width: 100%;
-        margin-bottom: 1em;
+        margin-bottom: 0.3em;
         font-size: 1.5em;
+        text-align: center;
+        border:0;
+        background: transparent;
+        color: white;
+      }
+
+      #topic::-webkit-input-placeholder {
+        color: white;
+      }
+
+      #reset {
+        padding: 5px;
+        margin-bottom: 1em;
+        display: inline-block;
       }
 
       #messages {
@@ -35,6 +56,10 @@
       }
       #messages { margin-bottom: 40px }
 
+      .cards {
+        text-align: center;
+      }
+
       .card {
         display: inline-block;
         width: 70px;
@@ -48,7 +73,7 @@
         cursor: pointer;
         position: relative;
         background: white;
-        box-shadow: 2px 1px 5px #d4d4d4;
+        box-shadow: 2px 1px 5px #333;
         border-radius: 3px;
       }
 
@@ -64,7 +89,7 @@
         left: 0;
         width: 100%;
         height: 100%;
-        border: 5px solid #ccc;
+        border: 5px solid white;
         border-radius: 3px;
       }
 
@@ -76,13 +101,15 @@
 
       /* Checked state */
       .card input:checked ~ .card__indicator {
-      	border-color: #2aa1c0;
+      	border-color: red;
+        background: red;
+        color: white;
       }
 
       /* Hover state whilst checked */
       .card:hover input:not([disabled]):checked ~ .card__indicator,
       .card input:checked:focus ~ .card__indicator {
-      	border-color: #0e647d;
+      	border-color: red;
       }
 
       /* Disabled state */
@@ -92,9 +119,25 @@
       	background: #e6e6e6;
       }
 
+      .card .votes {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background: #333;
+        color: white;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        line-height: 20px;
+        font-weight: bold;
+        border-radius: 50%;
+        z-index: 1;
+      }
+
       #votes {
         margin: 1em 0;
         min-height: 70px;
+        text-align: center;
       }
 
       #votes li {
@@ -131,52 +174,65 @@
   <body>
     <form action="">
 
-      <textarea id="topic" placeholder="Task/UserStory" rows="5"></textarea>
+      <button id="reset" type="button">Reset All!</button>
+
+      <textarea id="topic" placeholder="Task/UserStory"></textarea>
 
       <div class="cards">
-        <label class="card card--radio"> X
+        <label class="card card--radio">
       		<input type="radio" name="points" value="0" class="reset">
-          <div class="card__indicator"></div>
+          <div class="card__indicator">X</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">1
+        <label class="card card--radio">
       		<input type="radio" name="points" value="1" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">1</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">2
+        <label class="card card--radio">
       		<input type="radio" name="points" value="2" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">2</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">3
+        <label class="card card--radio">
       		<input type="radio" name="points" value="3" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">3</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">5
+        <label class="card card--radio">
       		<input type="radio" name="points" value="5" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">5</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">8
+        <label class="card card--radio">
       		<input type="radio" name="points" value="8" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">8</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">13
+        <label class="card card--radio">
       		<input type="radio" name="points" value="13" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">13</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">21
+        <label class="card card--radio">
       		<input type="radio" name="points" value="21" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">21</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">34
+        <label class="card card--radio">
       		<input type="radio" name="points" value="34" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">34</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">55
+        <label class="card card--radio">
       		<input type="radio" name="points" value="55" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">55</div>
+          <div class="votes"></div>
       	</label>
-        <label class="card card--radio">89
+        <label class="card card--radio">
       		<input type="radio" name="points" value="89" >
-          <div class="card__indicator"></div>
+          <div class="card__indicator">89</div>
+          <div class="votes"></div>
       	</label>
       </div>
     </form>
@@ -193,8 +249,10 @@
       $(function () {
 
         // Socket:
-
         var socket = io();
+        var data = {
+          votes : {}
+        };
 
         socket.on('connect', function() {
           socket.emit('set nickname', prompt('What is your nickname?'));
@@ -213,32 +271,68 @@
 
         socket.on('vote update', function (votes) {
           console.log('topic update event!');
-          console.log(votes);
+
+          data.votes = {};
 
           $('#votes').html('');
           votes.forEach(function(element) {
+            data.votes[element.vote] = typeof(data.votes[element.vote]) !== 'undefined' ? data.votes[element.vote] + 1 : 1;
             $('#votes').prepend($('<li>').html('<span class="name">'  + element.nickname + '</span>' + '<span class="vote">'  + element.vote + '</span>' ));
           });
 
+          if (votes.length == 0) {
+            voteReset();
+          }
+
+          cardsUpdateView();
+          votesUpdateView();
         });
 
         // UI:
-
-        $( "#topic" ).keyup(function() {
-          socket.emit('topic update', $(this).val());
+        var typingTimer;
+        $('#topic').on("input", function() {
+          clearTimeout(typingTimer);
+          var topic = $(this).val();
+          // Update topic with a delay:
+          typingTimer = setTimeout(function() {
+            socket.emit('topic update', topic);
+          }, 1000);
         });
 
         $('input[name=points]').change(function () {
           socket.emit('vote update', $(this).val());
         });
 
-        /*
-        $('input[name=points].reset').on('click mousedown', function() {
-          $this = $(this);
-          $this.removeAttr("checked");
-          $('input[name=points]').change();
+        $('#reset').click(function () {
+          socket.emit('vote reset', $(this).val());
         });
-        */
+
+        /**
+         * Cards view.
+         * Only show votes after making own.
+         */
+        function cardsUpdateView() {
+          $('.card').each(function (index) {
+            var $this = $(this);
+            var val = $this.find('input[name=points]').val();
+            var total = typeof (data.votes[val]) !== 'undefined' ? data.votes[val] : 0;
+            var $votes = $this.find('.votes');
+            $votes.text(total).show();
+            if (total == 0 || !haveIVoted()) {
+              $votes.hide();
+            }
+          });
+        }
+
+        function votesUpdateView() {
+          haveIVoted() ? $('#votes').css("visibility", "visible") : $('#votes').css("visibility", "hidden");
+        }
+
+        function haveIVoted() {
+          return $('input[name=points]:checked').val();
+        }
+
+        cardsUpdateView();
 
         function voteReset() {
           $('input[name=points]:checked').removeAttr("checked");

@@ -49,12 +49,6 @@ io.on('connection', function(socket) {
     data.topic = topic;
     console.log('topic update!' + data.topic);
     io.emit('topic update', data.topic);
-
-    // Reset votes:
-    Object.keys(io.sockets.sockets).forEach(function(id) {
-      io.sockets.connected[id].vote = null;
-    });
-    io.emit('vote update', []);
   });
 
   socket.on('vote update', function(vote) {
@@ -64,6 +58,21 @@ io.on('connection', function(socket) {
 
     messageUserSend('has voted.');
   });
+
+  socket.on('vote reset', function(vote) {
+    console.log('vote update!' + vote);
+    socket.vote = null;
+    votesReset();
+
+    messageUserSend('has voted.');
+  });
+
+  function votesReset() {
+    Object.keys(io.sockets.sockets).forEach(function(id) {
+      io.sockets.connected[id].vote = null;
+    });
+    io.emit('vote update', []);
+  }
 
   function messageUserSend(message) {
     var msg = currentDateFormatted() + ' / ' + ' <b>' + socket.nickname + '</b> ' + message;
