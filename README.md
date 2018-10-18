@@ -11,13 +11,14 @@ npm install
 ```
 
 # Running the project
-This will run project in localhost:3000
-``` bash
-npm start
-```
+This will run project with ngrok.
 
-# Remote
-You can also run your planning poker instance using ngrok, in this way you can do planning poker with your remote teammates.
-``` bash
-ngrok http 3000
-```
+## 1) Up docker compose
+`docker-compose up -d --build`
+
+## 2) Get ngrok url
+`curl $(docker port ngrok 4040)/api/tunnels | grep -Po "https"://[^\"]+`
+
+This will output a ngrok url like this:
+
+`https://exampledomain.eu.ngrok.io/`
