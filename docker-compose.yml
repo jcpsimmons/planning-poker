@@ -18,9 +18,10 @@ services:
       - NGROK_DEBUG=1
       #- NGROK_USERNAME=username
       #- NGROK_PASSWORD=pasword
+
   npm:
     container_name: npm
     image: node:7.7.2-alpine
     volumes:
         - ./:/usr/app
-    command: 'sh -c "cd /usr/app && npm start"'
+    command: 'sh -c "cd /usr/app/ && ./scripts/start.sh"'
