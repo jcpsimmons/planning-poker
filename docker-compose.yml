@@ -4,7 +4,7 @@ services:
 
   # curl $(docker port ngrok 4040)/api/tunnels | grep -Po "https"://[^\"]+
   ngrok:
-    container_name: ngrok
+    container_name: ${PROJECT_NAME}_ngrok
     ports:
       - "0.0.0.0:4040:4040"
     image: wernight/ngrok
@@ -20,7 +20,7 @@ services:
       #- NGROK_PASSWORD=pasword
 
   npm:
-    container_name: npm
+    container_name: ${PROJECT_NAME}_npm
     image: node:7.7.2-alpine
     volumes:
         - ./:/usr/app

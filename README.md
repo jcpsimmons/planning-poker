@@ -22,3 +22,7 @@ This will run project with ngrok.
 This will output a ngrok url like this:
 
 `https://exampledomain.eu.ngrok.io/`
+
+
+# Notes
+- Now the containers are prefixed by PROJECT_NAME included in .env. If you are having some conflict edit .env file.
