@@ -2,7 +2,6 @@ version: "2.3"
 
 services:
 
-  # curl $(docker port ngrok 4040)/api/tunnels | grep -Po "https"://[^\"]+
   ngrok:
     container_name: ${PROJECT_NAME}_ngrok
     ports:

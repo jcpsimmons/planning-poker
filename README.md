@@ -17,7 +17,7 @@ This will run project with ngrok.
 `docker-compose up -d --build`
 
 ## 2) Get ngrok url
-`curl $(docker port ngrok 4040)/api/tunnels | grep -Po "https"://[^\"]+`
+`curl $(docker port planning_poker_ngrok 4040)/api/tunnels | grep -Po "https"://[^\"]+`
 
 This will output a ngrok url like this:
 
