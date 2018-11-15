@@ -2,14 +2,6 @@
 
 This is the source code for a very simple planning poker for Metadrop.
 
-# Installation
-
-``` bash
-git clone git@bitbucket.org:metadrop/planning-poker.git
-cd planning-poker
-npm install
-```
-
 # Running the project
 This will run project with ngrok.
 
