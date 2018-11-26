@@ -23,7 +23,7 @@ services:
     image: node:7.7.2-alpine
     volumes:
         - ./:/usr/app
-    command: 'sh -c "cd /usr/app/ && ./scripts/start.sh"'
+    command: 'sh -c "cd /usr/app/ && ./scripts/npm-start.sh"'
 
   busybox-curl:
     container_name: ${PROJECT_NAME}_busybox_curl
