@@ -4,8 +4,6 @@ services:
 
   ngrok:
     container_name: ${PROJECT_NAME}_ngrok
-    ports:
-      - "0.0.0.0:4040:4040"
     image: wernight/ngrok
     links:
       - "npm"
