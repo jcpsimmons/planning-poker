@@ -24,3 +24,7 @@ services:
     volumes:
         - ./:/usr/app
     command: 'sh -c "cd /usr/app/ && ./scripts/start.sh"'
+
+  busybox-curl:
+    container_name: ${PROJECT_NAME}_busybox_curl
+    image: odise/busybox-curl:latest
