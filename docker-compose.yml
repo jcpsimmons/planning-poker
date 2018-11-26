@@ -4,8 +4,6 @@ services:
 
   ngrok:
     container_name: ${PROJECT_NAME}_ngrok
-    ports:
-      - "0.0.0.0:4040:4040"
     image: wernight/ngrok
     links:
       - "npm"
@@ -23,4 +21,8 @@ services:
     image: node:7.7.2-alpine
     volumes:
         - ./:/usr/app
-    command: 'sh -c "cd /usr/app/ && ./scripts/start.sh"'
+    command: 'sh -c "cd /usr/app/ && ./scripts/npm-start.sh"'
+
+  busybox-curl:
+    container_name: ${PROJECT_NAME}_busybox_curl
+    image: odise/busybox-curl:latest
