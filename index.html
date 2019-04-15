@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Socket.IO planning poker</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <meta name="viewport" content="width=device-width">
     <style>
@@ -20,16 +21,18 @@
       }
 
       #topic-wrapper {
+        display: flex;
         border-bottom: 2px solid #dfe6e8;
         padding: 10px;
         box-shadow: 0 0 5px #BBB;
         background: #f3f6f7;
       }
+
       #topic {
         border-radius: 3px;
         border: 2px solid #dfe6e8;
         padding: 0.5em;
-        width: 100%;
+        width: 80%;
         font-size: 1.5em;
         text-align: center;
         background: white;
@@ -37,19 +40,13 @@
         padding: 10px;
       }
 
+      .reload {
+        width: 20%;
+        font-size: 2em;
+      }
+
       #topic::-webkit-input-placeholder {
         color: gray;
-      }
-
-      #reset-wrapper {
-        text-align: center;
-      }
-      #reset {
-        padding: 10px;
-        margin-bottom: 1em;
-        display: inline-block;
-
-        font-size: 1em;
       }
 
       #messages {
@@ -92,7 +89,7 @@
         margin-bottom: 5px;
         text-align: center;
         /*font-size: 1.6em;*/
-        font-size: 1.6em;
+        font-size: 2em;
         cursor: pointer;
         position: relative;
         background: white;
@@ -197,6 +194,7 @@
     <form action="">
       <div id="topic-wrapper">
         <textarea id="topic" placeholder="Task/UserStory"></textarea>
+        <button id="refresh" class="reload"><i class="fas fa-sync-alt"></i></button>
       </div>
 
       <div class="cards">
@@ -261,10 +259,6 @@
     <ul id="votes">
       <li><span class="name">Anonymous</span><span class="vote">0</li>
     </ul>
-
-    <div id="reset-wrapper">
-      <button id="reset" type="button">Reset All!</button>
-    </div>
 
     <ul id="messages"></ul>
 
