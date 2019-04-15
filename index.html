@@ -73,18 +73,26 @@
         padding: 20px;
         background: white;
         padding: 30px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5%;
+        width: 90%;
       }
 
       .card {
-        display: inline-block;
-        width: 70px;
+        /*display: inline-block;
+        width: 70px;*/
+        width: 55px;
         height: 80px;
         line-height: 80px;
         padding: 10px;
         margin-right: 5px;
         margin-bottom: 5px;
         text-align: center;
-        font-size: 3em;
+        /*font-size: 1.6em;*/
+        font-size: 1.6em;
         cursor: pointer;
         position: relative;
         background: white;
@@ -102,7 +110,7 @@
         top: 0;
         left: 0;
         width: 100%;
-        height: 100%;
+        /** height: 100%; */
         border: 2px solid #dfe6e8;
         border-radius: 3px;
       }
@@ -272,7 +280,7 @@
         };
 
         socket.on('connect', function() {
-          socket.emit('set nickname', prompt('What is your nickname?'));
+          socket.emit('set nickname', 'Anonymous');
         });
 
         socket.on('message', function(msg){
