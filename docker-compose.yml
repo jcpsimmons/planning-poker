@@ -22,6 +22,8 @@ services:
     volumes:
         - ./:/usr/app
     command: 'sh -c "cd /usr/app/ && ./scripts/npm-start.sh"'
+    ports:
+      - 3001:3001
 
   busybox-curl:
     container_name: ${PROJECT_NAME}_busybox_curl
