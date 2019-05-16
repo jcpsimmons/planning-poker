@@ -1,0 +1,27 @@
+
+@mixin grid($items, $child, $gap: $gap, $min_width: 30rem, $vertical_align: stretch, $horizontal_align: center) {
+  display: flex;
+  flex-wrap: wrap;
+  margin: $gap -#{$gap};
+  align-items: $vertical_align;
+  justify-content: $horizontal_align;
+
+  #{$child} {
+    width: 100%/$items;
+    padding: $gap;
+    display: flex;
+    min-width: $min_width;
+  }
+}
+
+.view-display-id-page .view-content {
+  @include grid(5, 'div.views-row', $gap/2);
+
+  .node--view-mode-teaser {
+    width: 100%;
+
+    .node__content {
+      height: 100%;
+    }
+  }
+}

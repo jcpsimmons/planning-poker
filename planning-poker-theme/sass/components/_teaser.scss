@@ -1,0 +1,29 @@
+%teaser {
+  cursor: pointer;
+  background: $grey;
+  transition: all .25s ease;
+
+  &--active {
+    background: inherit;
+  }
+
+  &__title {
+    //
+  }
+
+  &__content {
+    padding: $gap;
+  }
+}
+
+.node--view-mode-teaser {
+  @extend %teaser;
+
+  .node__content {
+    @extend %teaser__content;
+  }
+
+  &:hover {
+    @extend %teaser--active;
+  }
+}
