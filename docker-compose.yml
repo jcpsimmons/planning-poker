@@ -18,7 +18,7 @@ services:
 
   npm:
     container_name: ${PROJECT_NAME}_npm
-    image: node:7.7.2-alpine
+    image: node:8-stretch
     volumes:
         - ./:/usr/app
     command: 'sh -c "cd /usr/app/ && ./scripts/npm-start.sh"'
