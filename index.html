@@ -4,306 +4,83 @@
     <title>Socket.IO planning poker</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="./planning-poker-theme/css/styles.css" type="text/css" />
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-    <meta name="viewport" content="width=device-width">
-    <style>
-      * { margin: 0; padding: 0; box-sizing: border-box; }
-      html {
-        height: 100%;
-      }
-
-      body {
-        padding: 0;
-        font-family: 'Roboto', sans-serif;
-        color: #333;
-        background: white;
-        font-size: 16px;
-      }
-
-      #vlayout {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: stretch;
-      }
-
-      #vlayout__main-item {
-        flex-grow: 1;
-      }
-
-      #vlayout__main-item #messages {
-        height: 100%;
-      }
-
-      #messages {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-        overflow-y: auto;
-        color: white;
-        background: #333;
-        font-size: 0.8em;
-        padding: 15px;
-        display: flex;
-        flex-wrap: wrap;
-        flex-flow: column-reverse;
-        box-shadow: 0 2px 3px #616161;
-      }
-
-      #messages li {
-        padding: 5px 0;
-        display: block;
-      }
-
-      #votes {
-        z-index: 2;
-        top: 0px;
-        left: 0px;
-        margin: 0px;
-        text-align: left;
-        right: 0px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 5px;
-        background: rgba(255, 255, 255, 0.8);
-      }
-      #votes li {
-        background: #fff;
-        padding: 5px;
-        margin: 7px;
-        display: flex;
-        flex-grow: 1;
-        justify-content: flex-end;
-        max-width: 200px;
-      }
-      #votes li span {
-        display: inline-block;
-        height: 30px;
-        line-height: 30px;
-      }
-      #votes li .vote {
-        display: inline-block;
-        background: #999;
-        color: white;
-        width: 30px;
-        text-align: center;
-        margin-left: 10px;
-      }
-
-      form {
-        text-align: center;
-      }
-
-      #topic-wrapper {
-        padding: 15px;
-        display: flex;
-        flex-direction: row-reverse;
-        align-items: center;
-      }
-
-      #topic {
-        font-size: 1.5em;
-        background: white;
-        color: gray;
-        border: 0;
-        width: 100%;
-        text-align: left;
-        border-radius: 0;
-        font-family: inherit;
-        border-bottom: 2px solid grey;
-        padding: 0 10px 0px 0px;
-        appearance: none;
-        -webkit-appearance: none;
-        margin-left: 15px;
-        outline: 0;
-        height: 2.5em;
-      }
-
-      .reload {
-        height: 50px;
-        width: 50px;
-        appearance: none;
-        -webkit-appearance: none;
-        border: 0;
-        box-shadow: 0px 0px 4px #7b7b7b;
-        text-align: center;
-        line-height: 50px;
-        background: white;
-        color: black;
-        font-size: 30px;
-      }
-
-      #topic::-webkit-input-placeholder {
-        color: gray;
-      }
-
-      .cards {
-        margin: 0;
-        text-align: center;
-        width: 100%;
-        display: flex;
-        padding: 10px;
-        box-shadow: 0px 2px 5px grey;
-        flex-wrap: wrap;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .card {
-        cursor: pointer;
-        position: relative;
-        background: white;
-        border-radius: 3px;
-        display: block;
-        font-size: 27px;
-        width: 50px;
-        box-shadow: 0 0 2px grey;
-        height: 50px;
-        line-height: 50px;
-        margin: 7px;
-      }
-
-      .card input {
-      	position: absolute;
-      	z-index: -1;
-      	opacity: 0;
-      }
-
-      .card__indicator {
-      }
-
-      /* Hover and focus states */
-      .card:hover input ~ .card__indicator,
-      .card input:focus ~ .card__indicator {
-      	border-color: #444;
-      }
-
-      /* Checked state */
-      .card input:checked ~ .card__indicator {
-      	border-color: #09D;
-        background: #09D;
-        color: white;
-      }
-
-      /* Hover state whilst checked */
-      .card:hover input:not([disabled]):checked ~ .card__indicator,
-      .card input:checked:focus ~ .card__indicator {
-      	border-color: #09D;
-      }
-
-      /* Disabled state */
-      .card input:disabled ~ .card__indicator {
-      	pointer-events: none;
-      	opacity: .6;
-      	background: #e6e6e6;
-      }
-
-      .card .votes {
-        position: absolute;
-        top: -10px;
-        right: -10px;
-        background: #333;
-        color: white;
-        width: 20px;
-        height: 20px;
-        font-size: 12px;
-        line-height: 20px;
-        font-weight: bold;
-        border-radius: 50%;
-        z-index: 1;
-      }
-
-      .votes-messages-wp {
-        position: relative;
-      }
-      .votes-messages-wp #votes {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-      }
-    /*
-
-      form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-      form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-      form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }*/
-
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
   </head>
-  <body id="vlayout">
-    <div class="votes-messages-wp" id="vlayout__main-item">
-      <ul id="votes">
-        <li><span class="name">Anonymous</span><span class="vote">0</li>
-      </ul>
+  <body>
+    <div class="main-layout">
+      <div class="votes-messages-wp main-layout__first">
+        <ul id="messages"></ul>
+      </div>
 
-      <ul id="messages"></ul>
+      <form action="" class="main-layout__second">
+        <ul id="votes">
+          <li><span class="name">Anonymous</span><span class="vote">0</li>
+        </ul>
+        <div class="cards">
+          <label class="card card--radio">
+            <input type="radio" name="points" value="0" class="reset">
+            <div class="card__indicator">X</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="1" >
+            <div class="card__indicator">1</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="2" >
+            <div class="card__indicator">2</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="3" >
+            <div class="card__indicator">3</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="5" >
+            <div class="card__indicator">5</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="8" >
+            <div class="card__indicator">8</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="13" >
+            <div class="card__indicator">13</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="21" >
+            <div class="card__indicator">21</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="34" >
+            <div class="card__indicator">34</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="55" >
+            <div class="card__indicator">55</div>
+            <div class="votes"></div>
+          </label>
+          <label class="card card--radio">
+            <input type="radio" name="points" value="89" >
+            <div class="card__indicator">89</div>
+            <div class="votes"></div>
+          </label>
+        </div>
+
+        <div id="topic-wrapper">
+          <textarea id="topic" placeholder="Task/UserStory"></textarea>
+          <button id="refresh" class="reload"><i class="fas fa-sync-alt"></i></button>
+        </div>
+      </form>
     </div>
-
-    <form action="">
-      <div class="cards">
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="0" class="reset">
-          <div class="card__indicator">X</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="1" >
-          <div class="card__indicator">1</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="2" >
-          <div class="card__indicator">2</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="3" >
-          <div class="card__indicator">3</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="5" >
-          <div class="card__indicator">5</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="8" >
-          <div class="card__indicator">8</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="13" >
-          <div class="card__indicator">13</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="21" >
-          <div class="card__indicator">21</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="34" >
-          <div class="card__indicator">34</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="55" >
-          <div class="card__indicator">55</div>
-          <div class="votes"></div>
-      	</label>
-        <label class="card card--radio">
-      		<input type="radio" name="points" value="89" >
-          <div class="card__indicator">89</div>
-          <div class="votes"></div>
-      	</label>
-      </div>
-
-      <div id="topic-wrapper">
-        <textarea id="topic" placeholder="Task/UserStory"></textarea>
-        <button id="refresh" class="reload"><i class="fas fa-sync-alt"></i></button>
-      </div>
-    </form>
 
     <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -313,14 +90,14 @@
         // Socket:
         var socket = io();
         var data = {
-          votes : {}
+          votes: {}
         };
 
         socket.on('connect', function() {
           socket.emit('set nickname', 'Anonymous');
         });
 
-        socket.on('message', function(msg){
+        socket.on('message', function (msg) {
           $('#messages').prepend($('<li>').html(msg));
         });
 
@@ -336,9 +113,9 @@
           data.votes = {};
 
           $('#votes').html('');
-          votes.forEach(function(element) {
-            data.votes[element.vote] = typeof(data.votes[element.vote]) !== 'undefined' ? data.votes[element.vote] + 1 : 1;
-            $('#votes').prepend($('<li>').html('<span class="name">'  + element.nickname + '</span>' + '<span class="vote">'  + element.vote + '</span>' ));
+          votes.forEach(function (element) {
+            data.votes[element.vote] = typeof (data.votes[element.vote]) !== 'undefined' ? data.votes[element.vote] + 1 : 1;
+            $('#votes').prepend($('<li>').html('<span class="name">' + element.nickname + '</span>' + '<span class="vote">' + element.vote + '</span>'));
           });
 
           if (votes.length == 0) {
@@ -351,11 +128,11 @@
 
         // UI:
         var typingTimer;
-        $('#topic').on("input", function() {
+        $('#topic').on("input", function () {
           clearTimeout(typingTimer);
           var topic = $(this).val();
           // Update topic with a delay:
-          typingTimer = setTimeout(function() {
+          typingTimer = setTimeout(function () {
             socket.emit('topic update', topic);
           }, 1000);
         });
