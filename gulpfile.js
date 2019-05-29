@@ -1,24 +1,24 @@
 /**
  * Settings
  */
+const theme_base_path = './planning-poker-theme/';
 const settings = {
-  theme_base_path: './planning-poker-theme/',
   server: {
     proxy: 'localhost:3000'
   },
   styles: {
-    input: this.theme_base_path + 'sass/**/*.{scss,sass}',
-    output: this.theme_base_path + 'css'
+    input: theme_base_path + 'sass/**/*.{scss,sass}',
+    output: theme_base_path + 'css'
   },
   js: {
     es6: false,
-    input: this.theme_base_path + 'js/*',
-    output: this.theme_base_path + 'dist/js'
+    input: theme_base_path + 'js/*',
+    output: theme_base_path + 'dist/js'
   },
   img: {
     min: false,
-    input: this.theme_base_path + 'images/*',
-    output: this.theme_base_path + 'dist/images'
+    input: theme_base_path + 'images/*',
+    output: theme_base_path + 'dist/images'
   }
 }
 
@@ -78,8 +78,8 @@ gulp.task('serve', function() {
     // injectChanges: true
   });
 
-  gulp.watch(this.theme_base_path + 'css/*.css', browserSync.reload);
-  gulp.watch(this.theme_base_path + 'js/**/*.js', browserSync.reload);
+  gulp.watch(theme_base_path + 'css/*.css', browserSync.reload);
+  gulp.watch(theme_base_path + 'js/**/*.js', browserSync.reload);
 });
 
 // Default task.
