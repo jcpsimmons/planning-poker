@@ -93,8 +93,8 @@
           votes: {}
         };
 
-        socket.on('connect', function() {
-          socket.emit('set nickname', 'Anonymous');
+        socket.on('connect', function () {
+          socket.emit('set nickname', prompt('What is your nickname?'));
         });
 
         socket.on('message', function (msg) {
