@@ -53,20 +53,6 @@
   height: #{$lh*$n}em;
 }
 
-@mixin main {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: $max_width_default;
-}
-
-@mixin main-content {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: $max_width_content;
-  padding-left: $gap;
-  padding-right: $gap;
-}
-
 @mixin btn-reset-to-link {
   cursor: pointer;
   display: inline;

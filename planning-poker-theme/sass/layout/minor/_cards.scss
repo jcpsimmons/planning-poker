@@ -1,0 +1,23 @@
+
+%cards {
+  display: flex;
+  white-space: nowrap;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  &__card {
+    margin: $gap*0.7;
+
+    @include breakpoint($tablet) {
+      margin: $gap;
+    }
+  }
+}
+
+.cards {
+  @extend %cards;
+
+  .card {
+    @extend %cards__card;
+  }
+}

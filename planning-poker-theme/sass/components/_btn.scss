@@ -6,7 +6,13 @@
   font-size: $font_size_base_s;
 }
 
-@mixin btn-solid($color: $color-primary, $text: $white, $percent: 10%, $shadow: 0 1px 1px #717171) {
+@mixin btn-solid--active($active-color: $color) {
+  background-color: $active-color;
+  text-decoration: none;
+  color: $white;
+}
+
+@mixin btn-solid($color: $color-primary, $active-color: $color, $text: $white, $shadow: 0 1px 1px #717171) {
   appearance: none;
   padding: .7em 1.1em;
   box-shadow: $shadow;
@@ -24,12 +30,10 @@
   cursor: pointer;
 
   &:active, &:hover, &:focus {
-    background-color: darken($color, $percent);
-    text-decoration: none;
-    color: $white;
+    @include btn-solid--active($active-color);
   }
   &:disabled,
-  &.disabled {
+    &.disabled {
     background: #D2D2D2;
     border-color: #D2D2D2;
     cursor: default;
@@ -38,6 +42,11 @@
 
 @mixin btn-solid--big {
   @include btn--big;
+  padding: .5em 1em !important;
+}
+
+@mixin btn-solid--small {
+  @include btn--small;
   padding: .5em 1em !important;
 }
 
@@ -72,11 +81,11 @@
   background: none;
 
   &:active, &:hover, &:focus {
-    border-color: darken($color, 10%);
-    color: darken($color, 10%);
+    border-color: $color;
+    color: $color;
   }
   &:disabled,
-  &.disabled {
+    &.disabled {
     color: #D2D2D2;
     border-color: #D2D2D2;
     cursor: default;
@@ -86,6 +95,10 @@
 @mixin btn-void--big {
   @include btn--big;
   padding: .5em 1em !important;
+}
+
+@mixin btn-void--small {
+  @include btn--small;
 }
 
 .btn-secondary { @include btn-void; }
@@ -118,7 +131,7 @@
     color: darken($color, $percent);
   }
   &:disabled,
-  &.disabled {
+    &.disabled {
     color: #D2D2D2;
     border-color: #D2D2D2;
     cursor: default;

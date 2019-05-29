@@ -11,27 +11,26 @@ $red: #da291c;
 $red_dark: #9A3324;
 $blue: #09D;
 
-$color_primary: $blue;
+$color_primary: $black;
 $color_secondary: $white;
 
 $link_color: $color_primary;
-$text_color: $color_secondary;
-$bg_color: $grey_dark;
+$text_color: $color_primary;
+$bg_color: $white;
 
 // =============================================================================
 // FONTS.
 // =============================================================================
-$PTSans: 'PT Sans', sans-serif;
-$arial: Arial, Helvetica, "Nimbus Sans L", sans-serif;
+$roboto: 'Roboto', sans-serif;
 
 // Font weights.
-$font_weight_bold: 700;
+$font_weight_bold: 900;
 $font_weight_normal: normal;
 $font_weight_lighter: 300;
 $font_weight_body: $font_weight_normal;
 
-$font_family_base: $PTSans;
-$font_family_headings: $PTSans;
+$font_family_base: $roboto;
+$font_family_headings: $roboto;
 
 // Font sizes.
 // @see https://type-scale.com/.

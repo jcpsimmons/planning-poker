@@ -10,8 +10,12 @@
 @import "base/list";
 @import "base/paragraph";
 @import "base/input";
-@import "layout/major/main";
+@import "layout/major/main-layout";
+@import "layout/minor/cards";
 
 @import "components/btn";
+@import "components/card";
+@import "components/votes";
+@import "components/topic";
 
 @import "theme/theme";

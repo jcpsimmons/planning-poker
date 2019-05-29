@@ -1,0 +1,45 @@
+
+%topic {
+  max-width: 80rem;
+  width: 100%;
+  margin-top: 2em;
+  display: flex;
+  align-items: flex-end;
+  @include breakpoint($tablet) {
+    margin-top: 3em;
+  }
+
+  &__textarea {
+    appearance: none;
+    border: 0;
+    background: none;
+    outline: 0;
+    width: 100%;
+    padding: 0;
+    border-bottom: 2px solid;
+    @include font-size($h3_font_size);
+    resize: none;
+
+    @include breakpoint($tablet) {
+      @include font-size($h1_font_size);
+    }
+  }
+  &__action {
+    @include btn-solid($blue, darken($blue, 10%));
+    @include breakpoint($tablet) {
+      @include btn-solid--big;
+    }
+    margin-left: $gap;
+  }
+}
+
+#topic-wrapper {
+  @extend %topic;
+
+  textarea {
+    @extend %topic__textarea;
+  }
+  button {
+    @extend %topic__action;
+  }
+}

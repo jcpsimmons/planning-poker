@@ -13,15 +13,3 @@
     min-width: $min_width;
   }
 }
-
-.view-display-id-page .view-content {
-  @include grid(5, 'div.views-row', $gap/2);
-
-  .node--view-mode-teaser {
-    width: 100%;
-
-    .node__content {
-      height: 100%;
-    }
-  }
-}
