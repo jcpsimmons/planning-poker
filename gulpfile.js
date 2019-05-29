@@ -74,6 +74,7 @@ gulp.task('es6', () =>
 gulp.task('serve', function() {
   browserSync.init({
     port: 3001,
+    open: false,
     proxy: settings.server.proxy
     // injectChanges: true
   });
