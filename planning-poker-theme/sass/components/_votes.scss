@@ -1,13 +1,10 @@
 
 %votes {
-  margin-bottom: $gap_large;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  align-items: flex-end;
 
-  @include breakpoint($tablet) {
-    margin-bottom: 2 * $gap_large;
-  }
   &__vote {
     @include btn-solid($blue);
     margin: $gap*0.7;

@@ -21,3 +21,11 @@
     @extend %cards__card;
   }
 }
+
+#votes + .cards {
+  margin-top: $gap_large;
+
+  @include breakpoint($tablet) {
+    margin-top: 2 * $gap_large;
+  }
+}

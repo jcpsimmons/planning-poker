@@ -15,7 +15,7 @@
 
       <form action="" class="main-layout__second">
         <ul id="votes">
-          <li><span class="name">Anonymous</span><span class="vote">0</li>
+          <li class="avoid-vertical-jump"><span class="name">Anonymous</span><span class="vote">0</li>
         </ul>
         <div class="cards">
           <label class="card card--radio">
@@ -112,7 +112,7 @@
 
           data.votes = {};
 
-          $('#votes').html('');
+          $('#votes').html('<li class="avoid-vertical-jump"><span class="name">Anonymous</span><span class="vote">0</li>');
           votes.forEach(function (element) {
             data.votes[element.vote] = typeof (data.votes[element.vote]) !== 'undefined' ? data.votes[element.vote] + 1 : 1;
             $('#votes').prepend($('<li>').html('<span class="name">' + element.nickname + '</span>' + '<span class="vote">' + element.vote + '</span>'));
