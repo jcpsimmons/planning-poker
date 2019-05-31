@@ -7,6 +7,10 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/planning-poker-theme/css/styles.css', function(req, res){
+  res.sendFile(__dirname + '/planning-poker-theme/css/styles.css');
+});
+
 var conections = 0;
 
 var data = {

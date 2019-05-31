@@ -1,0 +1,7 @@
+version: "3.6"
+
+services:
+
+  npm:
+    ports:
+      - 3001:3001

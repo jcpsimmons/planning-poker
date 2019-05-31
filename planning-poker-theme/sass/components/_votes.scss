@@ -1,0 +1,52 @@
+
+%votes {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-end;
+
+  &__vote {
+    @include btn-solid($blue);
+    margin: $gap*0.7;
+
+    @include breakpoint-between(0, $tablet) {
+      @include btn-solid--small;
+    }
+
+    &--active {
+      @include btn-solid--active($blue);
+      cursor: default;
+    }
+
+    @include breakpoint($tablet) {
+      @include btn-solid($blue);
+      margin: $gap;
+    }
+
+    &__vote {
+      width: 1.5em;
+      height: 1.5em;
+      display: inline-block;
+      background: white;
+      color: $black;
+      line-height: 1.5;
+      margin-left: .8em;
+      box-shadow: inset 0px 0px 2px $black;
+    }
+  }
+}
+
+#votes {
+  @extend %votes;
+
+  > li {
+    @extend %votes__vote;
+
+    &:active, &:hover, &:focus {
+      @extend %votes__vote--active;
+    }
+  }
+  .vote {
+    @extend %votes__vote__vote;
+  }
+}

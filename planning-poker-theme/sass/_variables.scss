@@ -1,0 +1,90 @@
+
+// =============================================================================
+// COLORS.
+// =============================================================================
+$black: #333;
+$white: #fff;
+$grey: #2f2f2f;
+$grey_light: #EDEDED;
+$grey_dark: #181818;
+$red: #da291c;
+$red_dark: #9A3324;
+$blue: #09D;
+
+$color_primary: $black;
+$color_secondary: $white;
+
+$link_color: $color_primary;
+$text_color: $color_primary;
+$bg_color: $white;
+
+// =============================================================================
+// FONTS.
+// =============================================================================
+$roboto: 'Roboto', sans-serif;
+
+// Font weights.
+$font_weight_bold: 900;
+$font_weight_normal: normal;
+$font_weight_lighter: 300;
+$font_weight_body: $font_weight_normal;
+
+$font_family_base: $roboto;
+$font_family_headings: $roboto;
+
+// Font sizes.
+// @see https://type-scale.com/.
+$font_size_base:   1.6; // 16px
+
+$font_size_base_l: 1.560em;
+$font_size_base_s: 0.750em;
+
+// Mobile font sizes.
+$h1_font_size: 2.8;
+$h2_font_size: 2.4;
+$h3_font_size: 1.8;
+$h4_font_size: 1.06;
+$h5_font_size: 1;
+$h6_font_size: 0.87;
+// Large font sizes.
+$h1_font_size_l: 4.8;
+$h2_font_size_l: 2.4;
+$h3_font_size_l: 1.8;
+$h4_font_size_l: 1.06;
+$h5_font_size_l: 1;
+$h6_font_size_l: 0.87;
+
+// Line heights.
+$line_height_base: 1.5;
+$h1_line_height: 1.1;
+$h2_line_height: 1.2;
+$h3_line_height: 1.2;
+$h4_line_height: 1.2;
+$h5_line_height: 1.2;
+$h6_line_height: 1.2;
+
+// =============================================================================
+// BREAKPOINTS.
+// =============================================================================
+$mobile: 0;
+$phablet: 47.9rem;
+$tablet: 76.7rem;
+$desktop: 102.3rem;
+
+$menu_break: 90.0rem;
+
+// =============================================================================
+// MAX-WIDTHS.
+// =============================================================================
+$max_width_s: 74.0rem;
+$max_width_base:   120.0rem;
+$max_width_l: 100%;
+
+$max_width_content: $max_width_s;
+$max_width_default: $max_width_l;
+
+// =============================================================================
+// GAPS.
+// =============================================================================
+$gap_large: 2.0rem;
+$gap: 1.0rem;

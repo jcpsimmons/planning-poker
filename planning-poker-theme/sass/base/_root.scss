@@ -1,0 +1,23 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+  line-height: $line_height_base;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  color: $text_color;
+  font-family: $font_family_base;
+  font-weight: $font_weight_body;
+  @include font-size($font_size_base);
+  overflow-x: hidden;
+  margin: 0;
+  background: $bg_color;
+  height: 100%;
+  width: 100%;
+}
