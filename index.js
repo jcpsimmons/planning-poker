@@ -40,7 +40,16 @@ io.on('connection', function(socket) {
     var curent_connections = conections;
     var current_votes = 0;
     var current_topic = data.topic != null ? data.topic : 'Not defined Taks/UserStory';
+    var message = '';
+    var current_history = {
+      'topic': current_topic,
+      'users': [],
+    };
     Object.keys(io.sockets.sockets).forEach(function(id) {
+      current_history.users.push({
+        'nickname': io.sockets.connected[id].nickname,
+        'vote': io.sockets.connected[id].vote,
+      });
       if (io.sockets.connected[id].vote != null) {
         current_votes++;
       }
@@ -50,17 +59,23 @@ io.on('connection', function(socket) {
     console.log('CURRENT VOTES ' + current_votes);
     if (curent_connections == current_votes) {
       // @TODO Save all users votes.
-      data.history.push(current_topic);
+      data.history.push(current_history);
       io.emit('history', data.history);
     }
     else {
       io.emit('history not yet', data.history);
     }
-    io.emit('message', '<strong>**TASK HISTORY LOG**</strong>');
-    data.history.forEach(function(msg) {
-      io.emit('message', '-/ ' + msg);
+    //io.emit('message', '<strong>**TASK HISTORY LOG**</strong></br></br>');
+    data.history.forEach(function(history) {
+      // io.emit('message', '<strong>' + history.topic + '</strong>');
+      io.emit('message', '**<strong>' + history.topic + '</strong>**');
+      history.users.forEach(function(user) {
+        //io.emit('message', '"' + history.topic + '"<strong>: ' + user.nickname + '</strong> - ' + user.vote + '');
+        io.emit('message', '<strong>' + user.nickname + '</strong> voted ' + user.vote);
+      });
+      io.emit('message', '**<strong>' + history.topic + '</strong>**');
     });
-    io.emit('message', '<strong>**TASK HISTORY LOG**</strong>');
+    //io.emit('message', '<strong>****TASK HISTORY LOG****</strong>');
   }
 
   socket.on('disconnect', function() {
