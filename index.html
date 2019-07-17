@@ -97,6 +97,16 @@
           socket.emit('set nickname', prompt('What is your nickname?'));
         });
 
+        socket.on('history', function (whatever) {
+          console.log(whatever, 'HISTORY');
+        });
+        socket.on('history not yet', function (whatever) {
+          console.log(whatever, 'HISTORY NOT YET');
+        });
+        socket.on('debug', function (msg) {
+          console.log(msg, 'DEBUG');
+        });
+
         socket.on('message', function (msg) {
           $('#messages').prepend($('<li>').html(msg));
         });

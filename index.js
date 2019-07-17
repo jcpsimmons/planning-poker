@@ -16,6 +16,7 @@ var conections = 0;
 var data = {
   topic : null,
   votes: [],
+  history: [],
 };
 
 io.on('connection', function(socket) {
@@ -32,7 +33,35 @@ io.on('connection', function(socket) {
 
   socket.on('connect', function() {
     console.log('connected');
+
   });
+
+  function taskUserHistory() {
+    var curent_connections = conections;
+    var current_votes = 0;
+    var current_topic = data.topic != null ? data.topic : 'Not defined Taks/UserStory';
+    Object.keys(io.sockets.sockets).forEach(function(id) {
+      if (io.sockets.connected[id].vote != null) {
+        current_votes++;
+      }
+    });
+    // Consider task resolved when all connected people has voted.
+    console.log('CURRENT CONNECTIONS ' + curent_connections);
+    console.log('CURRENT VOTES ' + current_votes);
+    if (curent_connections == current_votes) {
+      // @TODO Save all users votes.
+      data.history.push(current_topic);
+      io.emit('history', data.history);
+    }
+    else {
+      io.emit('history not yet', data.history);
+    }
+    io.emit('message', '<strong>**TASK HISTORY LOG**</strong>');
+    data.history.forEach(function(msg) {
+      io.emit('message', '-/ ' + msg);
+    });
+    io.emit('message', '<strong>**TASK HISTORY LOG**</strong>');
+  }
 
   socket.on('disconnect', function() {
     conections--;
@@ -96,6 +125,7 @@ io.on('connection', function(socket) {
     });
 
     io.emit('vote update', data.votes);
+    taskUserHistory();
   }
 
   function currentDateFormatted() {
