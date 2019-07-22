@@ -8,3 +8,15 @@
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
+
+.main-layout__first.history-list-wp {
+  display: none;
+
+  &.active {
+    display: block;
+  }
+}
+
+.main-layout__first.active + .main-layout__first {
+  display: none;
+}

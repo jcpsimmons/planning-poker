@@ -24,6 +24,13 @@
       @include font-size($h1_font_size);
     }
   }
+  &__action-secondary {
+    @include btn-solid($grey, darken($grey, 10%));
+    @include breakpoint($tablet) {
+      @include btn-solid--big;
+    }
+    margin-right: $gap;
+  }
   &__action {
     @include btn-solid($blue, darken($blue, 10%));
     @include breakpoint($tablet) {
@@ -39,7 +46,10 @@
   textarea {
     @extend %topic__textarea;
   }
-  button {
+  button.history {
+    @extend %topic__action-secondary;
+  }
+  button.reload {
     @extend %topic__action;
   }
 }

@@ -26,6 +26,7 @@ io.on('connection', function(socket) {
   // Init:
   conections++;
   socket.nickname = "Anonymous";
+  taskUserHistory();
 
   // Send (current) data:
   socket.emit('topic update', data.topic);
@@ -33,49 +34,31 @@ io.on('connection', function(socket) {
 
   socket.on('connect', function() {
     console.log('connected');
-
   });
 
   function taskUserHistory() {
-    var curent_connections = conections;
-    var current_votes = 0;
+    var vote_match = true;
+    var vote = null;
     var current_topic = data.topic != null ? data.topic : 'Not defined Taks/UserStory';
-    var message = '';
-    var current_history = {
-      'topic': current_topic,
-      'users': [],
-    };
     Object.keys(io.sockets.sockets).forEach(function(id) {
-      current_history.users.push({
-        'nickname': io.sockets.connected[id].nickname,
-        'vote': io.sockets.connected[id].vote,
-      });
-      if (io.sockets.connected[id].vote != null) {
-        current_votes++;
+
+      if (vote == null && io.sockets.connected[id].vote != null) {
+        vote = io.sockets.connected[id].vote;
+      }
+      if (io.sockets.connected[id].vote != vote) {
+        vote_match = false;
+        return;
       }
     });
-    // Consider task resolved when all connected people has voted.
-    console.log('CURRENT CONNECTIONS ' + curent_connections);
-    console.log('CURRENT VOTES ' + current_votes);
-    if (curent_connections == current_votes) {
-      // @TODO Save all users votes.
-      data.history.push(current_history);
-      io.emit('history', data.history);
+    if (!vote_match) {
+      io.emit('show disclaimer');
     }
-    else {
-      io.emit('history not yet', data.history);
+    else if (vote != null) {
+      // @TODO Prevent duplications!
+      data.history.push(current_topic + ' => ' + vote);
+      io.emit('hide disclaimer');
     }
-    //io.emit('message', '<strong>**TASK HISTORY LOG**</strong></br></br>');
-    data.history.forEach(function(history) {
-      // io.emit('message', '<strong>' + history.topic + '</strong>');
-      io.emit('message', '**<strong>' + history.topic + '</strong>**');
-      history.users.forEach(function(user) {
-        //io.emit('message', '"' + history.topic + '"<strong>: ' + user.nickname + '</strong> - ' + user.vote + '');
-        io.emit('message', '<strong>' + user.nickname + '</strong> voted ' + user.vote);
-      });
-      io.emit('message', '**<strong>' + history.topic + '</strong>**');
-    });
-    //io.emit('message', '<strong>****TASK HISTORY LOG****</strong>');
+    io.emit('history refresh', data.history);
   }
 
   socket.on('disconnect', function() {
@@ -103,6 +86,7 @@ io.on('connection', function(socket) {
     console.log('vote update!' + vote);
     socket.vote = vote;
     votesRecalculate();
+    taskUserHistory();
 
     messageUserSend('has voted.');
   });
@@ -111,6 +95,7 @@ io.on('connection', function(socket) {
     console.log('vote update!' + vote);
     socket.vote = null;
     votesReset();
+    taskUserHistory();
 
     messageUserSend('has voted.');
   });

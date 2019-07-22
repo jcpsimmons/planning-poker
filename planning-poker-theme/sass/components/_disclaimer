@@ -1,0 +1,35 @@
+%disclaimer {
+  position: fixed;
+  z-index: 99;
+  top: -10em;
+  left: 1em;
+  right: 1em;
+  width: auto;
+  transition: top .25s ease;
+  background: #ac4646;
+  color: #fff;
+  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+  display: block;
+  padding: 1em 2em;
+  border-radius: 4px;
+  max-width: 100%;
+  text-align: center;
+
+  @include breakpoint($tablet) {
+    left: calc(50% + 16rem);
+    right: auto;
+    transform: translate(-50%,0);
+  }
+
+  &--active {
+    top: 2rem;
+  }
+}
+
+.disclaimer {
+  @extend %disclaimer;
+
+  &.active {
+    @extend %disclaimer--active;
+  }
+}
