@@ -26,7 +26,8 @@ io.on('connection', function(socket) {
   // Init:
   conections++;
   socket.nickname = "Anonymous";
-  taskUserHistory();
+  // Execute estimations history on init.
+  estimationsHistoryManage();
 
   // Send (current) data:
   socket.emit('topic update', data.topic);
@@ -36,26 +37,34 @@ io.on('connection', function(socket) {
     console.log('connected');
   });
 
-  function taskUserHistory() {
+  /**
+   * Estimations record history manage.
+   */
+  function estimationsHistoryManage() {
     var vote_match = true;
     var vote = null;
+    var has_valid_vote = false;
+    // Use joker if no topic has been defined.
     var current_topic = data.topic != null ? data.topic : 'Not defined Taks/UserStory';
-    Object.keys(io.sockets.sockets).forEach(function(id) {
 
-      if (vote == null && io.sockets.connected[id].vote != null) {
+    // Iterates through all connections and consider new record after all
+    // estimations match.
+    // Also show disclaimer when at least one estimation is different to others.
+    Object.keys(io.sockets.sockets).forEach(function(id) {
+      if (vote == null && io.sockets.connected[id].vote != null && io.sockets.connected[id].vote != "undefined") {
         vote = io.sockets.connected[id].vote;
+        has_valid_vote = true;
       }
-      if (io.sockets.connected[id].vote != vote) {
+      if (io.sockets.connected[id].vote != "undefined" && io.sockets.connected[id].vote != vote) {
         vote_match = false;
         return;
       }
     });
-    if (!vote_match) {
+    if (!vote_match && has_valid_vote) {
       io.emit('show disclaimer');
     }
     else if (vote != null) {
-      // @TODO Prevent duplications!
-      data.history.push(current_topic + ' => ' + vote);
+      data.history.push('[' + vote + '] ' + current_topic);
       io.emit('hide disclaimer');
     }
     io.emit('history refresh', data.history);
@@ -76,6 +85,10 @@ io.on('connection', function(socket) {
     messageUserSend('is now connected.');
   });
 
+  socket.on('hide disclaimer', function() {
+    io.emit('hide disclaimer', data.topic);
+  });
+
   socket.on('topic update', function(topic) {
     data.topic = topic;
     console.log('topic update!' + data.topic);
@@ -86,16 +99,21 @@ io.on('connection', function(socket) {
     console.log('vote update!' + vote);
     socket.vote = vote;
     votesRecalculate();
-    taskUserHistory();
 
     messageUserSend('has voted.');
+  });
+
+  /**
+   * Execute estimations history manage.
+   */
+  socket.on('history', function() {
+    estimationsHistoryManage();
   });
 
   socket.on('vote reset', function(vote) {
     console.log('vote update!' + vote);
     socket.vote = null;
     votesReset();
-    taskUserHistory();
 
     messageUserSend('has voted.');
   });
@@ -125,7 +143,6 @@ io.on('connection', function(socket) {
     });
 
     io.emit('vote update', data.votes);
-    taskUserHistory();
   }
 
   function currentDateFormatted() {

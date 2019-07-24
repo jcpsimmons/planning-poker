@@ -4,6 +4,7 @@
     <title>Socket.IO planning poker</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <link rel="stylesheet" href="./planning-poker-theme/css/styles.css" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
   </head>
@@ -79,7 +80,7 @@
         </div>
 
         <div id="topic-wrapper">
-          <button id="history" type="button" class="history"><i class="fas fa-history"></i></button>
+          <button id="history" type="button" class="history" title="Show log / estimation records history"><i class="fas fa-history"></i></button>
           <textarea id="topic" placeholder="Task/UserStory"></textarea>
           <button id="reset" type="button" class="reload"><i class="fas fa-sync-alt"></i></button>
         </div>
@@ -102,20 +103,38 @@
           socket.emit('set nickname', prompt('What is your nickname?'));
         });
 
+        /**
+         * Refresh estimation records.
+         */
         socket.on('history refresh', function (history) {
-          console.log(history, 'HISTORY');
-
           $('#history-list').html('');
+          // Add all records.
           history.forEach(function (log) {
             $('#history-list').prepend($('<li>').html(log));
           });
+          // Notify empty records.
+          if (history.length == 0) {
+            $('#history-list').prepend($('<li>').html('**Without estimation records**'));
+          }
         });
+
+        /**
+         * Show estimation disclaimer.
+         */
         socket.on('show disclaimer', function () {
           $('.disclaimer').addClass('active');
         });
+
+        /**
+         * Hide estimation disclaimer.
+         */
         socket.on('hide disclaimer', function () {
           $('.disclaimer').removeClass('active');
         });
+
+        /**
+         * Debug.
+         */
         socket.on('debug', function (msg) {
           console.log(msg, 'DEBUG');
         });
@@ -162,12 +181,17 @@
 
         $('input[name=points]').change(function () {
           socket.emit('vote update', $(this).val());
+          // Execute history records manage refresh.
+          socket.emit('history');
         });
 
         $('#reset').click(function () {
           socket.emit('vote reset', $(this).val());
+          // Hide disclaimer.
+          socket.emit('hide disclaimer');
         });
 
+        // Toggle records/log visibility.
         $('#history').click(function () {
           $('.history-list-wp').toggleClass('active');
         });
