@@ -122,7 +122,10 @@
          * Show estimation disclaimer.
          */
         socket.on('show disclaimer', function () {
-          $('.disclaimer').addClass('active');
+          // Do no anticipate, show disclaimer just if i've voted.
+          if (haveIVoted()) {
+            $('.disclaimer').addClass('active');
+          }
         });
 
         /**
