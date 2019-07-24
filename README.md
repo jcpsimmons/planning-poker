@@ -16,3 +16,4 @@ This will output a ngrok url like this:
 
 # Notes
 - Now the containers are prefixed by PROJECT_NAME included in .env. If you are having some conflict edit .env file.
+- To have nodejs debug info, replace on package.json start command by: "node index.js > log.log 2> log_error.log".
