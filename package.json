@@ -17,6 +17,7 @@
     "start": "node index.js"
   },
   "devDependencies": {
+    "babel": "^6.23.0",
     "browser-sync": "^2.29.3",
     "sass": "^1.65.1"
   },

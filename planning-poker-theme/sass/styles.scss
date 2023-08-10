@@ -1,22 +1,21 @@
 // Init.
-@import "init";
-@import "fonts";
+@import 'init';
+@import 'fonts';
 
 // SMACSS.
-@import "base/root";
-@import "base/headings";
-@import "base/image";
-@import "base/link";
-@import "base/list";
-@import "base/paragraph";
-@import "base/input";
-@import "layout/major/main-layout";
-@import "layout/minor/cards";
+@import 'base/root';
+@import 'base/headings';
+@import 'base/image';
+@import 'base/link';
+@import 'base/list';
+@import 'base/paragraph';
+@import 'base/input';
+@import 'layout/major/main-layout';
+@import 'layout/minor/cards';
 
-@import "components/btn";
-@import "components/card";
-@import "components/votes";
-@import "components/topic";
-@import "components/disclaimer";
+@import 'components/btn';
+@import 'components/card';
+@import 'components/votes';
+@import 'components/topic';
 
-@import "theme/theme";
+@import 'theme/theme';
