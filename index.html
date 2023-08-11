@@ -1,237 +1,223 @@
 <!doctype html>
 <html>
-  <head>
-    <title>Socket.IO planning poker</title>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
-    <link rel="stylesheet" href="./planning-poker-theme/css/styles.css" type="text/css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  </head>
-  <body>
-    <div class="main-layout">
-      <div class="history-list-wp main-layout__first">
-        <ul id="history-list"></ul>
-      </div>
-      <div class="votes-messages-wp main-layout__first">
-        <ul id="messages"></ul>
-      </div>
 
-      <form action="" class="main-layout__second">
-        <ul id="votes">
-          <li class="avoid-vertical-jump"><span class="name">Anonymous</span><span class="vote">0</li>
-        </ul>
-        <div class="cards">
-          <label class="card card--radio">
-            <input type="radio" name="points" value="0" class="reset">
-            <div class="card__indicator">X</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="1" >
-            <div class="card__indicator">1</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="2" >
-            <div class="card__indicator">2</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="3" >
-            <div class="card__indicator">3</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="5" >
-            <div class="card__indicator">5</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="8" >
-            <div class="card__indicator">8</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="13" >
-            <div class="card__indicator">13</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="21" >
-            <div class="card__indicator">21</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="34" >
-            <div class="card__indicator">34</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="55" >
-            <div class="card__indicator">55</div>
-            <div class="votes"></div>
-          </label>
-          <label class="card card--radio">
-            <input type="radio" name="points" value="89" >
-            <div class="card__indicator">89</div>
-            <div class="votes"></div>
-          </label>
-        </div>
+<head>
+  <title>Socket.IO planning poker</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+    integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+  <link rel="stylesheet" href="./planning-poker-theme/css/styles.css" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+</head>
 
-        <div id="topic-wrapper">
-          <button id="history" type="button" class="history" title="Show log / estimation records history"><i class="fas fa-history"></i></button>
-          <textarea id="topic" placeholder="Task/UserStory"></textarea>
-          <button id="reset" type="button" class="reload"><i class="fas fa-sync-alt"></i></button>
-        </div>
-      </form>
+<body>
+  <div class="main-layout">
+    <div class="history-list-wp main-layout__first">
+      <ul id="history-list"></ul>
     </div>
-    <div class="disclaimer"><i class="fas fa-exclamation-triangle"></i> Estimations do not match, discuss and adjust the vote to add estimation record.</div>
+    <div class="votes-messages-wp main-layout__first">
+      <ul id="messages"></ul>
+    </div>
 
-    <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script>
-      $(function () {
+    <form action="" class="main-layout__second">
+      <ul id="votes">
+        <li class="avoid-vertical-jump"><span class="name">Anonymous</span><span class="vote">0</li>
+      </ul>
+      <div class="cards">
+        <label class="card card--radio">
+          <input type="radio" name="points" value="0" class="reset">
+          <div class="card__indicator">X</div>
+          <div class="votes"></div>
+        </label>
+        <label class="card card--radio">
+          <input type="radio" name="points" value="1">
+          <div class="card__indicator">1</div>
+          <div class="votes"></div>
+        </label>
+        <label class="card card--radio">
+          <input type="radio" name="points" value="2">
+          <div class="card__indicator">2</div>
+          <div class="votes"></div>
+        </label>
+        <label class="card card--radio">
+          <input type="radio" name="points" value="3">
+          <div class="card__indicator">3</div>
+          <div class="votes"></div>
+        </label>
+        <label class="card card--radio">
+          <input type="radio" name="points" value="5">
+          <div class="card__indicator">5</div>
+          <div class="votes"></div>
+        </label>
+        <label class="card card--radio">
+          <input type="radio" name="points" value="8">
+          <div class="card__indicator">8</div>
+          <div class="votes"></div>
+        </label>
+        <label class="card card--radio">
+          <input type="radio" name="points" value="13">
+          <div class="card__indicator">13</div>
+          <div class="votes"></div>
+        </label>
+      </div>
 
-        // Socket:
-        var socket = io();
-        var data = {
-          votes: {}
-        };
+      <div id="topic-wrapper">
+        <button id="history" type="button" class="history" title="Show log / estimation records history"><i
+            class="fas fa-history"></i></button>
+        <textarea id="topic" placeholder="Task/UserStory"></textarea>
+        <button id="reset" type="button" class="reload"><i class="fas fa-sync-alt"></i></button>
+      </div>
+    </form>
+  </div>
+  <div class="disclaimer"><i class="fas fa-exclamation-triangle"></i> Estimations do not match, discuss and adjust the
+    vote to add estimation record.</div>
 
-        socket.on('connect', function () {
-          socket.emit('set nickname', prompt('What is your nickname?'));
+  <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script>
+    $(function () {
+
+      // Socket:
+      var socket = io();
+      var data = {
+        votes: {}
+      };
+
+      socket.on('connect', function () {
+        socket.emit('set nickname', prompt('What is your nickname?'));
+      });
+
+      /**
+       * Refresh estimation records.
+       */
+      socket.on('history refresh', function (history) {
+        $('#history-list').html('');
+        // Add all records.
+        history.forEach(function (log) {
+          $('#history-list').prepend($('<li>').html(log));
+        });
+        // Notify empty records.
+        if (history.length == 0) {
+          $('#history-list').prepend($('<li>').html('**Without estimation records**'));
+        }
+      });
+
+      /**
+       * Show estimation disclaimer.
+       */
+      socket.on('show disclaimer', function () {
+        // Do no anticipate, show disclaimer just if i've voted.
+        if (haveIVoted()) {
+          $('.disclaimer').addClass('active');
+        }
+      });
+
+      /**
+       * Hide estimation disclaimer.
+       */
+      socket.on('hide disclaimer', function () {
+        $('.disclaimer').removeClass('active');
+      });
+
+      /**
+       * Debug.
+       */
+      socket.on('debug', function (msg) {
+        console.log(msg, 'DEBUG');
+      });
+
+      socket.on('message', function (msg) {
+        $('#messages').prepend($('<li>').html(msg));
+      });
+
+      socket.on('topic update', function (topic) {
+        console.log('topic update event!' + topic);
+        $('#topic').val(topic);
+        voteReset();
+      });
+
+      socket.on('vote update', function (votes) {
+        console.log('topic update event!');
+
+        data.votes = {};
+
+        $('#votes').html('<li class="avoid-vertical-jump"><span class="name">Anonymous</span><span class="vote">0</li>');
+        votes.forEach(function (element) {
+          data.votes[element.vote] = typeof (data.votes[element.vote]) !== 'undefined' ? data.votes[element.vote] + 1 : 1;
+          $('#votes').prepend($('<li>').html('<span class="name">' + element.nickname + '</span>' + '<span class="vote">' + element.vote + '</span>'));
         });
 
-        /**
-         * Refresh estimation records.
-         */
-        socket.on('history refresh', function (history) {
-          $('#history-list').html('');
-          // Add all records.
-          history.forEach(function (log) {
-            $('#history-list').prepend($('<li>').html(log));
-          });
-          // Notify empty records.
-          if (history.length == 0) {
-            $('#history-list').prepend($('<li>').html('**Without estimation records**'));
-          }
-        });
-
-        /**
-         * Show estimation disclaimer.
-         */
-        socket.on('show disclaimer', function () {
-          // Do no anticipate, show disclaimer just if i've voted.
-          if (haveIVoted()) {
-            $('.disclaimer').addClass('active');
-          }
-        });
-
-        /**
-         * Hide estimation disclaimer.
-         */
-        socket.on('hide disclaimer', function () {
-          $('.disclaimer').removeClass('active');
-        });
-
-        /**
-         * Debug.
-         */
-        socket.on('debug', function (msg) {
-          console.log(msg, 'DEBUG');
-        });
-
-        socket.on('message', function (msg) {
-          $('#messages').prepend($('<li>').html(msg));
-        });
-
-        socket.on('topic update', function (topic) {
-          console.log('topic update event!' + topic);
-          $('#topic').val(topic);
+        if (votes.length == 0) {
           voteReset();
-        });
-
-        socket.on('vote update', function (votes) {
-          console.log('topic update event!');
-
-          data.votes = {};
-
-          $('#votes').html('<li class="avoid-vertical-jump"><span class="name">Anonymous</span><span class="vote">0</li>');
-          votes.forEach(function (element) {
-            data.votes[element.vote] = typeof (data.votes[element.vote]) !== 'undefined' ? data.votes[element.vote] + 1 : 1;
-            $('#votes').prepend($('<li>').html('<span class="name">' + element.nickname + '</span>' + '<span class="vote">' + element.vote + '</span>'));
-          });
-
-          if (votes.length == 0) {
-            voteReset();
-          }
-
-          cardsUpdateView();
-          votesUpdateView();
-        });
-
-        // UI:
-        var typingTimer;
-        $('#topic').on("input", function () {
-          clearTimeout(typingTimer);
-          var topic = $(this).val();
-          // Update topic with a delay:
-          typingTimer = setTimeout(function () {
-            socket.emit('topic update', topic);
-          }, 1000);
-        });
-
-        $('input[name=points]').change(function () {
-          socket.emit('vote update', $(this).val());
-          // Execute history records manage refresh.
-          socket.emit('history');
-        });
-
-        $('#reset').click(function () {
-          socket.emit('vote reset', $(this).val());
-          // Hide disclaimer.
-          socket.emit('hide disclaimer');
-        });
-
-        // Toggle records/log visibility.
-        $('#history').click(function () {
-          $('.history-list-wp').toggleClass('active');
-        });
-
-        /**
-         * Cards view.
-         * Only show votes after making own.
-         */
-        function cardsUpdateView() {
-          $('.card').each(function (index) {
-            var $this = $(this);
-            var val = $this.find('input[name=points]').val();
-            var total = typeof (data.votes[val]) !== 'undefined' ? data.votes[val] : 0;
-            var $votes = $this.find('.votes');
-            $votes.text(total).show();
-            if (total == 0 || !haveIVoted()) {
-              $votes.hide();
-            }
-          });
-        }
-
-        function votesUpdateView() {
-          haveIVoted() ? $('#votes').css("visibility", "visible") : $('#votes').css("visibility", "hidden");
-        }
-
-        function haveIVoted() {
-          return $('input[name=points]:checked').val();
         }
 
         cardsUpdateView();
-
-        function voteReset() {
-          $('input[name=points]:checked').removeAttr("checked");
-        }
-
-
+        votesUpdateView();
       });
-    </script>
-  </body>
+
+      // UI:
+      var typingTimer;
+      $('#topic').on("input", function () {
+        clearTimeout(typingTimer);
+        var topic = $(this).val();
+        // Update topic with a delay:
+        typingTimer = setTimeout(function () {
+          socket.emit('topic update', topic);
+        }, 1000);
+      });
+
+      $('input[name=points]').change(function () {
+        socket.emit('vote update', $(this).val());
+        // Execute history records manage refresh.
+        socket.emit('history');
+      });
+
+      $('#reset').click(function () {
+        socket.emit('vote reset', $(this).val());
+        // Hide disclaimer.
+        socket.emit('hide disclaimer');
+      });
+
+      // Toggle records/log visibility.
+      $('#history').click(function () {
+        $('.history-list-wp').toggleClass('active');
+      });
+
+      /**
+       * Cards view.
+       * Only show votes after making own.
+       */
+      function cardsUpdateView() {
+        $('.card').each(function (index) {
+          var $this = $(this);
+          var val = $this.find('input[name=points]').val();
+          var total = typeof (data.votes[val]) !== 'undefined' ? data.votes[val] : 0;
+          var $votes = $this.find('.votes');
+          $votes.text(total).show();
+          if (total == 0 || !haveIVoted()) {
+            $votes.hide();
+          }
+        });
+      }
+
+      function votesUpdateView() {
+        haveIVoted() ? $('#votes').css("visibility", "visible") : $('#votes').css("visibility", "hidden");
+      }
+
+      function haveIVoted() {
+        return $('input[name=points]:checked').val();
+      }
+
+      cardsUpdateView();
+
+      function voteReset() {
+        $('input[name=points]:checked').removeAttr("checked");
+      }
+
+
+    });
+  </script>
+</body>
+
 </html>

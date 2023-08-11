@@ -14,7 +14,8 @@
     "socket.io": "^1.7.4"
   },
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "startui": "yarn run gulp build"
   },
   "devDependencies": {
     "babel": "^6.23.0",
